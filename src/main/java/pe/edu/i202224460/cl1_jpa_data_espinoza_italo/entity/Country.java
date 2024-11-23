@@ -27,18 +27,15 @@ public class Country {
     @Column(name = "Region")
     private String region;
 
-    @Transient
     @Column(name = "SurfaceArea")
     private Double surfaceArea;
 
-    @Transient
     @Column(name = "IndepYear")
     private Integer indepYear;
 
     @Column(name = "Population")
     private Integer population;
 
-    @Transient
     @Column(name = "LifeExpectancy")
     private Double lifeExpectancy;
 
@@ -48,15 +45,12 @@ public class Country {
     @Column(name = "GNPOld")
     private Double gnpOld;
 
-    @Transient
     @Column(name = "LocalName")
     private String localName;
 
-    @Transient
     @Column(name = "GovernmentForm")
     private String governmentForm;
 
-    @Transient
     @Column(name = "HeadOfState")
     private String headOfState;
 

@@ -1,8 +1,5 @@
 package pe.edu.i202224460.cl1_jpa_data_espinoza_italo;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -60,16 +57,5 @@ public class Cl1JpaDataEspinozaItaloApplication implements CommandLineRunner {
 							.forEach(language -> System.out.println(language.getLanguage())));
 				}
 		);
-
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("JPA_PU");
-		EntityManager em = emf.createEntityManager();
-
-		Country peru = em.find(Country.class, "PER");
-
-		System.out.println("País encontrado: " + peru.getName());
-
-		peru.getCities().stream().filter( city -> city.getPopulation() > 700000)
-				.forEach( city -> System.out.println("Ciudad: " + city.getName() + ", Población: " + city.getPopulation()));
-
 	}
 }
