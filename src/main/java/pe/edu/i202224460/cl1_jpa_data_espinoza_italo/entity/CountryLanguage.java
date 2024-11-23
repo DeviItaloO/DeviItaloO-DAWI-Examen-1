@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "countrylanguage")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class CountryLanguage {
@@ -23,7 +22,8 @@ public class CountryLanguage {
     private Double percentage;
 
     @ManyToOne
-    @JoinColumn(name = "CountryCode", referencedColumnName = "Code", nullable = false)
+    @JoinColumn(name = "CountryCode", nullable = false)
+    @ToString.Exclude
     private Country country;
 
 }

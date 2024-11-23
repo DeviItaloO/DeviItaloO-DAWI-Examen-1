@@ -8,6 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import pe.edu.i202224460.cl1_jpa_data_espinoza_italo.entity.Country;
 import pe.edu.i202224460.cl1_jpa_data_espinoza_italo.repository.CountryRepository;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -27,35 +29,48 @@ public class Cl1JpaDataEspinozaItaloApplication implements CommandLineRunner {
 		/**
 		 * 1. Consulta -> ifPresentOrElse
 		 * */
-		Optional<Country> countryArgentina = countryRepository.findById("ARG");
-		countryArgentina.ifPresentOrElse(
-				country -> country.getCountryLanguages()
-						.forEach(language -> System.out.println(language.getLanguage())),
-				() -> {
-					Optional<Country> countryPeru = countryRepository.findById("PER");
-					countryPeru.ifPresent(peru -> peru.getCountryLanguages()
-							.forEach(language -> System.out.println(language.getLanguage())));
-				}
-		);
+//		Optional<Country> countryArgentina = countryRepository.findById("ARG");
+//		countryArgentina.ifPresentOrElse(
+//				argentina -> argentina.getCountryLanguages()
+//						.forEach(language -> System.out.println("MESSI XD -> "+language.getLanguage())),
+//				() -> {
+//					Optional<Country> countryPeru = countryRepository.findById("PER");
+//					countryPeru.ifPresent(peru -> peru.getCountryLanguages()
+//							.forEach(language -> System.out.println("PAOLO XD -> "+language.getLanguage())));
+//				}
+//		);
 
 		/**
-		 * 2. Consulta -> deleteAllById
+		 * 2. Eliminar -> deleteAllById
 		 * */
-		countryRepository.deleteById("COL");
-		countryRepository.deleteById("ARG");
+		List<String> ids = List.of("COL", "ARG");
+
+		// Forzar la carga de las relaciones antes de eliminar
+		Iterable<Country> countries = countryRepository.findAllById(ids);
+		countries.forEach(country -> {
+			country.getCities().size(); // Forzar la carga de ciudades
+			country.getCountryLanguages().size(); // Forzar la carga de lenguajes
+		});
+		System.out.println("Países encontrados antes de eliminar: " + countries);
+
+		// Eliminar en cascada
+		countryRepository.deleteAllById(ids);
+		System.out.println("Intenté eliminar COL y ARG.");
+
+
 
 		/**
-		 * 3. la primera consulta pero ya no hay messi xd solo de Perú :D
+		 * 3. la primera consulta pero ya no hay messi xd solo Paolo :D
 		 * */
-		countryArgentina = countryRepository.findById("ARG");
-		countryArgentina.ifPresentOrElse(
-				country -> country.getCountryLanguages()
-						.forEach(language -> System.out.println(language.getLanguage())),
-				() -> {
-					Optional<Country> countryPeru = countryRepository.findById("PER");
-					countryPeru.ifPresent(peru -> peru.getCountryLanguages()
-							.forEach(language -> System.out.println(language.getLanguage())));
-				}
-		);
+//		countryArgentina = countryRepository.findById("ARG");
+//		countryArgentina.ifPresentOrElse(
+//				argentina -> argentina.getCountryLanguages()
+//						.forEach(language -> System.out.println("MESSI XD -> "+language.getLanguage())),
+//				() -> {
+//					Optional<Country> countryPeru = countryRepository.findById("PER");
+//					countryPeru.ifPresent(peru -> peru.getCountryLanguages()
+//							.forEach(language -> System.out.println("PAOLO XD -> "+language.getLanguage())));
+//				}
+//		);
 	}
 }

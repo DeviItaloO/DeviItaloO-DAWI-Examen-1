@@ -7,7 +7,6 @@ import lombok.*;
 @Table(name = "city")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class City {
@@ -27,6 +26,6 @@ public class City {
     private Integer population;
 
     @ManyToOne
-    @JoinColumn(name = "CountryCode", referencedColumnName = "Code", nullable = false)
+    @JoinColumn(name = "CountryCode", nullable = false)
     private Country country;
 }
