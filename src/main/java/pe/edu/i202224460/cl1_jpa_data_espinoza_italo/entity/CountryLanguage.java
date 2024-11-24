@@ -11,9 +11,8 @@ import lombok.*;
 @AllArgsConstructor
 public class CountryLanguage {
 
-    @Id
-    @Column(name = "Language")
-    private String language;
+    @EmbeddedId
+    private CountryLanguageId id;
 
     @Column(name = "IsOfficial")
     private String isOfficial;
@@ -22,7 +21,8 @@ public class CountryLanguage {
     private Double percentage;
 
     @ManyToOne
-    @JoinColumn(name = "CountryCode", nullable = false)
+    @JoinColumn(name = "CountryCode", referencedColumnName = "Code", insertable = false, updatable = false)
+    @MapsId("countryCode")
     @ToString.Exclude
     private Country country;
 

@@ -14,10 +14,10 @@ import java.util.List;
 public class Country {
 
     @Id
-    @Column(name="Code")
+    @Column(name="Code", length = 3)
     private String code;
 
-    @Column(name="Name")
+    @Column(name="Name", length = 3)
     private String name;
 
     @Column(name="Continent")
